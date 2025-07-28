@@ -2,6 +2,25 @@
 
 //const { createElement } = require("react");
 
+const navBar = document.createElement("nav");
+navBar.id = "header";
+document.body.insertBefore(navBar, document.body.firstChild);
+//console.log(navBar);
+
+const currentDate = new Date().getFullYear();
+const footBar = document.createElement("div");
+footBar.id = "footer";
+footBar.textContent = `@${currentDate} TV Show Project|Nataliia Volkova(Nataliia74). All rights reserved.`;
+document.body.appendChild(footBar);
+//console.log(footBar);
+
+const linkDataSource = document.createElement("a");
+linkDataSource.id = "linkfooter";
+linkDataSource.href = "https://tvmaze.com/";
+linkDataSource.textContent = "Data source";
+footBar.appendChild(linkDataSource);
+//console.log(linkDataSource);
+
 const rootElem = document.querySelector("#root");
 //console.log(rootElem);
 

@@ -6,6 +6,15 @@
   padding: 20px;
 }
 
+#header {
+  height: 50px;
+  background-color: rgb(243, 220, 175);
+  border-color: rgb(31, 9, 9) solid;
+  font-family: Helvetica, sans-serif;
+  font-size: 10px;
+  color: rgb(43, 6, 6);
+}
+
 .episode_card {
   background-color: #f2f0ea;
   border-color: rgb(31, 9, 9) solid;
@@ -26,4 +35,21 @@ img {
 h2 {
   color: rgb(101, 59, 5);
   font-weight: 600px;
+}
+
+#footer {
+  height: 25px;
+  background-color: rgb(243, 220, 175);
+  border-color: rgb(31, 9, 9) solid;
+  font-family: Helvetica, sans-serif;
+  font-size: 10px;
+  color: rgb(43, 6, 6);
+  justify-items: center;
+}
+
+#linkDataSource {
+  justify-content: right;
+  font-family: Helvetica, sans-serif;
+  font-size: 10px;
+  color: rgb(43, 6, 6);
 }
