@@ -1,3 +1,29 @@
 #root {
-  color: red;
+  background-color: burlywood;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.episode_card {
+  background-color: #f2f0ea;
+  border-color: rgb(31, 9, 9) solid;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 2px 2px 2px rgb(66, 37, 1);
+  font-family: Helvetica, sans-serif;
+  font-size: 10px;
+  color: rgb(43, 6, 6);
+}
+
+img {
+  border-radius: 10px;
+  border-color: rgb(31, 9, 9) solid;
+  box-shadow: 2px 2px 2px rgb(66, 37, 1);
+}
+
+h2 {
+  color: rgb(101, 59, 5);
+  font-weight: 600px;
 }
