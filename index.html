@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Show Project | Nataliia Volkova (Nataliia74)</title>
-    <link href="style.css" rel="stylesheet" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  </head>
 
-  <body>
-    <section id="root"></section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TV Show Project | Nataliia Volkova (Nataliia74)</title>
+  <link href="style.css" rel="stylesheet" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+</head>
 
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <script src="episodes.js"></script>
+<body>
+  <div id="search_bar">
+    <div id="select">
+      <select id="episodes_selection"></select>
+    </div>
+    <div>
+      <input id="episode_input" type="text">
+    </div>
+    <div>
+      <p id="display_quantity_dom">Displaying selected/total episodes.</p>
+    </div>
+  </div>
+  <section id="root"></section>
 
-    <!-- Loads YOUR javascript code -->
-    <script src="script.js"></script>
-  </body>
+  <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
+  <script src="episodes.js"></script>
+
+  <!-- Loads YOUR javascript code -->
+  <script src="script.js"></script>
+</body>
+
 </html>
