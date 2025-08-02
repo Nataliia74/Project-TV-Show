@@ -1,34 +1,24 @@
 //You can edit ALL of the code here
 
-//const { createElement } = require("react");
-
 const navBar = document.createElement("nav");
 navBar.id = "header";
 document.body.insertBefore(navBar, document.body.firstChild);
-//console.log(navBar);
 
 const currentDate = new Date().getFullYear();
 const footBar = document.createElement("div");
 footBar.id = "footer";
 footBar.textContent = `@${currentDate} TV Show Project|Nataliia Volkova(Nataliia74). All rights reserved.`;
 document.body.appendChild(footBar);
-//console.log(footBar);
 
 const linkDataSource = document.createElement("a");
 linkDataSource.id = "linkfooter";
 linkDataSource.href = "https://tvmaze.com/";
 linkDataSource.textContent = "Data source";
 footBar.appendChild(linkDataSource);
-//console.log(linkDataSource);
 
 const rootElem = document.querySelector("#root");
-//console.log(rootElem);
 
 const episode = getOneEpisode();
-
-// const episodeCard = document.createElement("div");
-// episodeCard.classList.add("episode_card");
-// rootElem.appendChild(episodeCard);
 
 function createEpisodeCardElement(
   parentElement,
@@ -46,28 +36,10 @@ function createEpisodeCardElement(
   return element;
 }
 
-// createEpisodeCardElement(episodeCard, "h2", episode.name);
-// //console.log("h2");
-
-// createEpisodeCardElement(
-//   episodeCard,
-//   "p",
-//   `Episode code:  S${episode.season
-//     .toString()
-//     .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`
-// );
-// //console.log("p");
-
-// const imageEpisode = document.createElement("img");
-// imageEpisode.src = episode.image.medium;
-// imageEpisode.alt = episode.name;
-// episodeCard.appendChild(imageEpisode);
-
-// createEpisodeCardElement(episodeCard, "p", `Summary: ${episode.summary}`, true);
-// //console.log("p");
+const allEpisodes = getAllEpisodes();
+const totalEpisodeQuantity = allEpisodes.length;
 
 function setup() {
-  const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
 
@@ -83,16 +55,6 @@ function makePageForEpisodes(allEpisodes) {
         .toString()
         .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`
     );
-    //console.log("h2");
-
-    // createEpisodeCardElement(
-    //   episodeCard,
-    //   "p",
-    //   `Episode code:  S${episode.season
-    //     .toString()
-    //     .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`
-    // );
-    //console.log("p");
 
     const imageEpisode = document.createElement("img");
     imageEpisode.src = episode.image.medium;
@@ -100,8 +62,76 @@ function makePageForEpisodes(allEpisodes) {
     episodeCard.appendChild(imageEpisode);
 
     createEpisodeCardElement(episodeCard, "p", episode.summary, true);
-    //console.log("p");
+    addSelectEntry(episode);
   });
 }
+
+
+// search bar part
+const episodeSelectDom = document.getElementById("episodes_selection");
+const selectAllOptionDom = document.createElement("option");
+// this first select option to select all episodes
+// so it created here manually
+selectAllOptionDom.value = "Select All Episodes";
+selectAllOptionDom.textContent = selectAllOptionDom.value;
+episodeSelectDom.appendChild(selectAllOptionDom);
+
+function addSelectEntry(episode) {
+  const optionDom = document.createElement("option");
+  optionDom.value = `S${episode.season
+    .toString()
+    .padStart(2, "0")
+    }E${episode.number.toString().padStart(2, "0")}` + " - " + episode.name;
+  optionDom.textContent = optionDom.value;
+  episodeSelectDom.appendChild(optionDom);
+}
+
+function modifyEpisodesQuantityDom(selected, total) {
+  const episodesQuantityDom = document.getElementById("display_quantity_dom");
+  let string = episodesQuantityDom.textContent;
+  string = string.replace("selected", String(selected));
+  string = string.replace("total", String(total));
+  episodesQuantityDom.textContent = string;
+}
+
+const selectOptionDom = document.getElementById("episodes_selection");
+selectOptionDom.addEventListener("change", function () {
+  let selectEpisodeName = selectOptionDom.value.substring(selectOptionDom.value.indexOf("- ") + 2);
+  if (selectOptionDom.value == "Select All Episodes") {
+    rootElem.innerHTML = '';
+    // recreate card for single selected
+    makePageForEpisodes(allEpisodes);
+  } else {
+    // function makePageForEpisodes needs an array as argument
+    // even if it is single element ( maybe refactor this in future)
+    let selectedEpisodes = [];
+    for (const episode of allEpisodes) {
+      if (episode.name == selectEpisodeName) {
+        selectedEpisodes[0] = episode;
+      }
+    }
+    // clear all episodes
+    rootElem.innerHTML = '';
+    // recreate card for single selected
+    makePageForEpisodes(selectedEpisodes);
+  }
+});
+
+const searchInputDom = document.getElementById("episode_input");
+searchInputDom.addEventListener("input", function () {
+  const search = searchInputDom.value;
+  let selectedEpisodes = [];
+  for (const episode of allEpisodes) {
+    if (episode.name.includes(search) || episode.summary.includes(search)) {
+      selectedEpisodes.push(episode);
+    }
+  }
+  rootElem.innerHTML = '';
+  makePageForEpisodes(selectedEpisodes);
+});
+
+modifyEpisodesQuantityDom(0, totalEpisodeQuantity);
+
+
 
 window.onload = setup;
