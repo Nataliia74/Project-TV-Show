@@ -13,6 +13,42 @@
   font-family: Helvetica, sans-serif;
   font-size: 10px;
   color: rgb(43, 6, 6);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+label {
+  display: none;
+}
+
+#episodes_selection {
+  width: 30%;
+  margin: 0 15px;
+  height: 31px;
+}
+
+#episodes_selection,
+#episode_input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #f2f0ea;
+  padding: 8px 12px;
+  font-size: 12px;
+  border: 1px solid burlywood;
+  border-radius: 7px;
+}
+
+#display_quantity_dom {
+  margin-bottom: 10px;
+  color: rgb(43, 6, 6);
+}
+
+#design_line {
+  background-color: rgb(43, 6, 6);
+  height: 2px;
 }
 
 .episode_card {
@@ -52,26 +88,4 @@ h2 {
   font-family: Helvetica, sans-serif;
   font-size: 10px;
   color: rgb(43, 6, 6);
-}
-
-#search_bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#search_bar div {
-  margin: 0 15px;
-}
-
-#select {
-  width: 30%;
-}
-
-#episodes_selection {
-  width: 100%;
-}
-
-#episodes_selection option {
-  color: black;
 }
