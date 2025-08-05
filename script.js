@@ -9,7 +9,7 @@ async function fetchData() {
     return JSON.parse(cached);
   }
   try {
-    const response = await fetch("https://api.tvmaze.com/shows/82/episode");
+    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
     if (!response.ok) {
       throw new Error("Could not fetch resource");
     } else {
@@ -18,7 +18,8 @@ async function fetchData() {
       return data;
     }
   } catch (error) {
-    alert("Error occurred:" + error);
+    alert("Failed to load data. Please check your network." + error);
+    console.log(error);
     return [];
   }
 }
