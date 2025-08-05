@@ -1,5 +1,28 @@
 //You can edit ALL of the code here
 
+let allEpisodes = [];
+let total = 0;
+
+async function fetchData() {
+  const cached = localStorage.getItem("tvmazeEpisodes");
+  if (cached) {
+    return JSON.parse(cached);
+  }
+  try {
+    const response = await fetch("https://api.tvmaze.com/shows/82/episode");
+    if (!response.ok) {
+      throw new Error("Could not fetch resource");
+    } else {
+      const data = await response.json();
+      localStorage.setItem("tvmazeEpisodes", JSON.stringify(data));
+      return data;
+    }
+  } catch (error) {
+    alert("Error occurred:" + error);
+    return [];
+  }
+}
+
 const navBar = document.createElement("div");
 navBar.id = "header";
 document.body.insertBefore(navBar, document.body.firstChild);
@@ -18,8 +41,6 @@ footBar.appendChild(linkDataSource);
 
 const rootElem = document.querySelector("#root");
 
-const episode = getOneEpisode();
-
 function createEpisodeCardElement(
   parentElement,
   tagName,
@@ -36,12 +57,20 @@ function createEpisodeCardElement(
   return element;
 }
 
-const allEpisodes = getAllEpisodes();
-const total = allEpisodes.length;
+//const allEpisodes = getAllEpisodes();
+//const total = allEpisodes.length;
 
-function setup() {
-  makePageForEpisodes(allEpisodes);
+async function setup() {
+  try {
+    allEpisodes = await fetchData();
+    total = allEpisodes.length;
+    makePageForEpisodes(allEpisodes);
+    modifyEpisodesQuantityDom(total, total);
+  } catch (error) {
+    console.log(`Error:`, error);
+  }
 }
+setup();
 
 function makePageForEpisodes(allEpisodes) {
   allEpisodes.forEach((episode) => {
@@ -50,7 +79,7 @@ function makePageForEpisodes(allEpisodes) {
     rootElem.appendChild(episodeCard);
     createEpisodeCardElement(
       episodeCard,
-      "h2",
+      "h3",
       `${episode.name}  -  S${episode.season
         .toString()
         .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`
@@ -102,7 +131,7 @@ selectOptionDom.addEventListener("change", function () {
   );
   let selectedEpisodes = [];
   if (selectOptionDom.value === "Select All Episodes") {
-    modifyEpisodesQuantityDom(allEpisodes.length, total);
+    modifyEpisodesQuantityDom(total, total);
     rootElem.innerHTML = "";
     // recreate card for single selected
     makePageForEpisodes(allEpisodes);
@@ -150,7 +179,5 @@ navBar.appendChild(episodesQuantityDom);
 function modifyEpisodesQuantityDom(selected, total) {
   episodesQuantityDom.textContent = `Displaying ${selected}/${total} episodes.`;
 }
-
-modifyEpisodesQuantityDom(allEpisodes.length, total);
 
 window.onload = setup;
