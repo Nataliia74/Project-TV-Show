@@ -1,6 +1,11 @@
 //You can edit ALL of the code here
 
-let allEpisodes = [];
+const state = {
+  allEpisodes: [],
+
+  searchTerm: "",
+};
+
 let total = 0;
 
 async function fetchData() {
@@ -63,9 +68,9 @@ function createEpisodeCardElement(
 
 async function setup() {
   try {
-    allEpisodes = await fetchData();
-    total = allEpisodes.length;
-    makePageForEpisodes(allEpisodes);
+    state.allEpisodes = await fetchData();
+    total = state.allEpisodes.length;
+    makePageForEpisodes(state.allEpisodes);
     modifyEpisodesQuantityDom(total, total);
   } catch (error) {
     console.log(`Error:`, error);
@@ -73,27 +78,31 @@ async function setup() {
 }
 setup();
 
-function makePageForEpisodes(allEpisodes) {
-  allEpisodes.forEach((episode) => {
-    const episodeCard = document.createElement("div");
-    episodeCard.classList.add("episode_card");
-    rootElem.appendChild(episodeCard);
-    createEpisodeCardElement(
-      episodeCard,
-      "h3",
-      `${episode.name}  -  S${episode.season
-        .toString()
-        .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`
-    );
+function createEpisodeCard(episode) {
+  const episodeCard = document.createElement("div");
+  episodeCard.classList.add("episode_card");
+  createEpisodeCardElement(
+    episodeCard,
+    "h3",
+    `${episode.name}  -  S${episode.season
+      .toString()
+      .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")}`
+  );
 
-    const imageEpisode = document.createElement("img");
-    imageEpisode.src = episode.image.medium;
-    imageEpisode.alt = episode.name;
-    episodeCard.appendChild(imageEpisode);
+  const imageEpisode = document.createElement("img");
+  imageEpisode.src = episode.image.medium;
+  imageEpisode.alt = episode.name;
+  episodeCard.appendChild(imageEpisode);
 
-    createEpisodeCardElement(episodeCard, "p", episode.summary, true);
-    addSelectEntry(episode);
-  });
+  createEpisodeCardElement(episodeCard, "p", episode.summary, true);
+  addSelectEntry(episode);
+  return episodeCard;
+}
+
+function makePageForEpisodes(episodes) {
+  rootElem.innerHTML = "";
+  const episodeCards = episodes.map(createEpisodeCard);
+  rootElem.append(...episodeCards);
 }
 
 // search bar part
@@ -130,48 +139,39 @@ selectOptionDom.addEventListener("change", function () {
   let selectEpisodeName = selectOptionDom.value.substring(
     selectOptionDom.value.indexOf("- ") + 2
   );
-  let selectedEpisodes = [];
+  let selectedEpisodes;
   if (selectOptionDom.value === "Select All Episodes") {
+    selectedEpisodes = state.allEpisodes;
     modifyEpisodesQuantityDom(total, total);
     rootElem.innerHTML = "";
-    // recreate card for single selected
-    makePageForEpisodes(allEpisodes);
+    makePageForEpisodes(state.allEpisodes);
   } else {
-    // function makePageForEpisodes needs an array as argument
-    // even if it is single element ( maybe refactor this in future)
-    for (const episode of allEpisodes) {
-      if (episode.name == selectEpisodeName) {
-        selectedEpisodes[0] = episode;
-      }
-    }
-
-    const selected = selectedEpisodes.length;
-    modifyEpisodesQuantityDom(selected, total);
-    // clear all episodes
-    rootElem.innerHTML = "";
-    // recreate card for single selected
-    makePageForEpisodes(selectedEpisodes);
+    selectedEpisodes = state.allEpisodes.filter(
+      (episode) => episode.name === selectEpisodeName
+    );
   }
+  modifyEpisodesQuantityDom(selectedEpisodes.length, total);
+  rootElem.innerHTML = "";
+  // recreate card for single selected
+  const filteredEpisodes = selectedEpisodes.map(createEpisodeCard);
+  rootElem.append(...filteredEpisodes);
 });
 
 const searchInputDom = document.getElementById("episode_input");
 navBar.appendChild(searchInputDom);
 searchInputDom.addEventListener("input", function () {
   const search = searchInputDom.value.toLowerCase();
-  let selectedEpisodes = [];
-  for (const episode of allEpisodes) {
-    if (
+  let selectedEpisodes = state.allEpisodes.filter(
+    (episode) =>
       episode.name.toLowerCase().includes(search) ||
       episode.summary.toLowerCase().includes(search)
-    ) {
-      selectedEpisodes.push(episode);
-    }
-  }
-  const selected = selectedEpisodes.length;
-  modifyEpisodesQuantityDom(selected, total);
+  );
+
+  modifyEpisodesQuantityDom(selectedEpisodes.length, total);
 
   rootElem.innerHTML = "";
-  makePageForEpisodes(selectedEpisodes);
+  filteredEpisodes = selectedEpisodes.map(createEpisodeCard);
+  rootElem.append(...filteredEpisodes);
 });
 
 const episodesQuantityDom = document.getElementById("display_quantity_dom");
