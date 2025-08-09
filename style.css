@@ -19,19 +19,23 @@
   gap: 10px;
 }
 
-#episodes_selection {
-  width: 30%;
+#selectors {
+  display: flex;
+  flex-direction: row;
   margin: 0 15px;
   height: 31px;
+  justify-content: flex-start;
 }
 
 #episodes_selection,
+#shows_selection,
 #episode_input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background: #f2f0ea;
   padding: 8px 12px;
+  margin: 0 15px 0 0;
   font-size: 12px;
   border: 1px solid burlywood;
   border-radius: 7px;
