@@ -1,4 +1,5 @@
 #root {
+  margin-top: 40px;
   background-color: burlywood;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -6,8 +7,31 @@
   padding: 20px;
 }
 
-#header {
+#front_page_root {
+  margin-top: 20px;
+  background-color: burlywood;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(250px, auto));
+  gap: 15px;
+  padding: 20px 0 0 20px;
+}
+
+.show_card {
+  width: 1050px;
+  height: 300px;
+  background-color: #f2f0ea;
+  border-color: rgb(31, 9, 9) solid;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 2px 2px 2px rgb(66, 37, 1);
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+  color: rgb(43, 6, 6);
+}
+
+.header {
   height: 50px;
+  width: 99%;
   background-color: rgb(243, 220, 175);
   border-color: rgb(31, 9, 9) solid;
   font-family: Helvetica, sans-serif;
@@ -17,9 +41,11 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  position: fixed;
+  top: 0;
 }
 
-#selectors {
+.selectors {
   display: flex;
   flex-direction: row;
   margin: 0 15px;
@@ -41,12 +67,13 @@
   border-radius: 7px;
 }
 
-#display_quantity_dom {
+#display_quantity_dom,
+#display_quantityShows_dom {
   margin-bottom: 10px;
   color: rgb(43, 6, 6);
 }
 
-#design_line {
+.design_line {
   background-color: rgb(43, 6, 6);
   height: 2px;
 }
@@ -62,10 +89,35 @@
   color: rgb(43, 6, 6);
 }
 
-img {
+#img_front {
+  height: 210px;
+  width: auto;
   border-radius: 10px;
   border-color: rgb(31, 9, 9) solid;
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
+}
+
+#mg_epi {
+  border-radius: 10px;
+  border-color: rgb(31, 9, 9) solid;
+  box-shadow: 2px 2px 2px rgb(66, 37, 1);
+}
+
+h2 {
+  color: rgb(54, 32, 4);
+  font-weight: 1000px;
+  align-self: center;
+}
+
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+#crossing {
+  color: rgb(101, 59, 5);
+  font-weight: 500px;
+  text-decoration-line: underline;
 }
 
 h3 {
@@ -73,7 +125,7 @@ h3 {
   font-weight: 500px;
 }
 
-#footer {
+.footer {
   height: 25px;
   background-color: rgb(243, 220, 175);
   border-color: rgb(31, 9, 9) solid;
@@ -83,7 +135,7 @@ h3 {
   justify-items: center;
 }
 
-#linkDataSource {
+.linkDataSource {
   justify-content: right;
   font-family: Helvetica, sans-serif;
   font-size: 12px;
