@@ -4,9 +4,6 @@ const state = {
   allShows,
   searchTerm: "",
 };
-// first time page rendered - first show selected
-//let selectedShowId = 1;
-//let total = 0;
 
 async function fetchAllShows(apiShowsUrl) {
   const cached = localStorage.getItem("tvmazeShows");
@@ -48,18 +45,16 @@ linkDataSource.href = "https://tvmaze.com/";
 linkDataSource.textContent = "Data source";
 footBar.appendChild(linkDataSource);
 
-//const rootElem = document.querySelector("#root");
-
 const showCardsPage = document.getElementById("front_page_root");
-console.log(showCardsPage);
 
 function createShowCardElement(
   parentElement,
   tagName,
+  id,
   content,
   innerHTML = false
 ) {
-  const element = document.createElement(tagName);
+  const element = document.createElement(tagName, id);
   if (innerHTML) {
     element.innerHTML = content;
   } else {
@@ -70,33 +65,53 @@ function createShowCardElement(
 }
 
 function getGenre(show) {
-  const genres = [];
-  show.genres.forEach((genre) => {
-    genres.push(genre);
-  });
-  return genres;
+  return show.genres.join(" | ");
 }
 
 function createShowCard(show) {
   const showCard = document.createElement("div");
   showCard.classList.add("show_card");
-  const showTitle = createShowCardElement(showCard, "h2");
+  const showTitle = createShowCardElement(showCard, "div");
+  showTitle.id = "title";
   const linkToEpisodes = document.createElement("a");
-  linkToEpisodes.href = "index.html";
+  linkToEpisodes.href = `episodes_page.html?showId=${show.id}`;
   linkToEpisodes.textContent = show.name;
   showTitle.appendChild(linkToEpisodes);
   const imageShowCard = document.createElement("img");
   imageShowCard.id = "img_front";
-  imageShowCard.src = show.image.medium;
-  imageShowCard.alt = show.name;
+  imageShowCard.src = show.image
+    ? show.image.medium
+    : "https://static.tvmaze.com/images/tvm-header-logo.png";
+  imageShowCard.alt = show.name || "No title";
   showCard.appendChild(imageShowCard);
-  createShowCardElement(showCard, "p", show.summary, true);
+  createShowCardElement(
+    showCard,
+    "div",
+    "summary",
+    show.summary || "No summary available",
+    true
+  );
   const sideShowCard = document.createElement("div");
   sideShowCard.classList.add("sideShowCard");
-  createShowCardElement(sideShowCard, "p", `Rated: ${show.rating.average}`);
-  createShowCardElement(sideShowCard, "p", `Genres: ${getGenre(show)}`);
-  createShowCardElement(sideShowCard, "p", `Status: ${show.status}`);
-  createShowCardElement(sideShowCard, "p", `Runtime: ${show.runtime}`);
+  createShowCardElement(
+    sideShowCard,
+    "p",
+    "rate",
+    `Rated: ${show.rating.average}`
+  );
+  createShowCardElement(
+    sideShowCard,
+    "p",
+    "genre",
+    `Genres: ${getGenre(show)}`
+  );
+  createShowCardElement(sideShowCard, "p", "status", `Status: ${show.status}`);
+  createShowCardElement(
+    sideShowCard,
+    "p",
+    "runtime",
+    `Runtime: ${show.runtime}`
+  );
   showCard.appendChild(sideShowCard);
 
   return showCard;
@@ -170,6 +185,8 @@ searchInputDom.addEventListener("input", function () {
   populateSelect(selectedShows);
 });
 
+// Filter shows according to the dropdown list of the whole
+// shows list or the selected shows, referring to the search input
 selectFilteredShowOptionDom.addEventListener("change", async function () {
   let selectShowName = selectFilteredShowOptionDom.value;
   if (selectShowName === "All shows") {
@@ -187,9 +204,10 @@ function modifyShowsQuantityDom(selected) {
   showsQuantityDom.textContent = `Found ${selected} shows`;
 }
 
+// Cross-referencing to the page with episodes
 const linkToEpisodesListing = document.createElement("a");
 linkToEpisodesListing.id = "crossing";
-linkToEpisodesListing.href = "index.html";
+linkToEpisodesListing.href = "episodes_page.html";
 linkToEpisodesListing.textContent = "Episodes Listing";
 navBar.appendChild(linkToEpisodesListing);
 

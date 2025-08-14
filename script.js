@@ -97,20 +97,47 @@ function createEpisodeCardElement(
 
 async function setup() {
   try {
-    state.allShows = await fetchAllShows("https://api.tvmaze.com/shows");
+    state.allShows = await fetchAllShows(`https://api.tvmaze.com/shows`);
+    state.allShows.sort((a, b) => {
+      const A = a.name.toLowerCase();
+      const B = b.name.toLowerCase();
+      if (A > B) return 1;
+      if (A < B) return -1;
+      return 0;
+    });
     for (const show of state.allShows) {
       addSelectEntry(show, "show");
     }
-    // create episodes card when page loaded first time with show id = 1
+
+    // read query from index.html page
+    const query = new URLSearchParams(window.location.search);
+    const selectedUrl = query.get("showId") || 1;
+    selectedShowId = selectedUrl;
+
     state.allEpisodes = await fetchShowEpisodesData(
-      "https://api.tvmaze.com/shows/" + selectedShowId + "/episodes",
+      `https://api.tvmaze.com/shows/${selectedShowId}/episodes`,
       selectedShowId
     );
+
+    const selectedShow = state.allShows.find(
+      (show) => show.id == selectedShowId
+    );
+
+    //check if the show name refers to the episode page refers to the clicked show name on the index.html page
+    if (selectedShow) showSelectDom.value = selectedShow.name;
+
+    // populate dropdown
+    episodeSelectDom.innerHTML = "";
+    createFirstOptionDom();
+    state.allEpisodes.forEach((episode) => addSelectEntry(episode, "episode"));
+
+    //render episodes
     total = state.allEpisodes.length;
     makePageForEpisodes(state.allEpisodes);
     modifyEpisodesQuantityDom(total, total);
   } catch (error) {
     console.log(`Error:`, error);
+    rootElem.innerHTML = "Failed to fetch data";
   }
 }
 
@@ -139,12 +166,19 @@ function createEpisodeCard(episode) {
 
   const imageEpisode = document.createElement("img");
   imageEpisode.id = "img_epi";
-  imageEpisode.src = episode.image.medium;
-  imageEpisode.alt = episode.name;
+  imageEpisode.src = episode.image
+    ? episode.image.medium
+    : "https://static.tvmaze.com/images/tvm-header-logo.png";
+  imageEpisode.alt = episode.name || "No title";
   episodeCard.appendChild(imageEpisode);
 
-  createEpisodeCardElement(episodeCard, "p", episode.summary, true);
-  addSelectEntry(episode, "episode");
+  createEpisodeCardElement(
+    episodeCard,
+    "p",
+    episode.summary || "No summary available",
+    true
+  );
+  //addSelectEntry(episode, "episode");
   return episodeCard;
 }
 
@@ -236,14 +270,27 @@ selectShowOptionDom.addEventListener("change", async function () {
   let selectedShow = state.allShows.filter(
     (show) => show.name === selectShowName
   );
+
   //here we use selected show id to get episodes
   selectedShowId = selectedShow[0].id;
   state.allEpisodes = await fetchShowEpisodesData(
     "https://api.tvmaze.com/shows/" + selectedShowId + "/episodes",
     selectedShowId
   );
+
+  total = state.allEpisodes.length;
+
+  // add filtered episodes dropdown options list
+  episodeSelectDom.innerHTML = "";
+  createFirstOptionDom();
+
+  for (const episode of state.allEpisodes) {
+    addSelectEntry(episode, "episode");
+  }
   rootElem.innerHTML = "";
   makePageForEpisodes(state.allEpisodes);
+
+  modifyEpisodesQuantityDom(total, total);
 });
 
 const searchInputDom = document.getElementById("episode_input");
@@ -267,12 +314,12 @@ const episodesQuantityDom = document.getElementById("display_quantity_dom");
 navBar.appendChild(episodesQuantityDom);
 
 function modifyEpisodesQuantityDom(selected, total) {
-  episodesQuantityDom.textContent = `Displaying ${selected}/${total} episodes.`;
+  episodesQuantityDom.textContent = `Displaying ${selected}/${total} episodes`;
 }
 
 const linkToShowListing = document.createElement("a");
 linkToShowListing.id = "crossing";
-linkToShowListing.href = "front_page.html";
+linkToShowListing.href = "index.html";
 linkToShowListing.textContent = "Back to Show Listing";
 navBar.appendChild(linkToShowListing);
 

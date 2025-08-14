@@ -1,5 +1,4 @@
 #root {
-  margin-top: 40px;
   background-color: burlywood;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -8,25 +7,28 @@
 }
 
 #front_page_root {
-  margin-top: 20px;
   background-color: burlywood;
   display: grid;
   grid-template-rows: repeat(auto-fill, minmax(250px, auto));
-  gap: 15px;
-  padding: 20px 0 0 20px;
+  padding: 10px 0 0 18px;
 }
 
 .show_card {
-  width: 1050px;
-  height: 300px;
+  width: 1070px;
+  height: 200px;
   background-color: #f2f0ea;
   border-color: rgb(31, 9, 9) solid;
   border-radius: 10px;
-  padding: 5px;
+  margin-bottom: 20px;
+  padding: 15px;
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
   font-family: Helvetica, sans-serif;
   font-size: 12px;
   color: rgb(43, 6, 6);
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  position: relative;
 }
 
 .header {
@@ -55,7 +57,9 @@
 
 #episodes_selection,
 #shows_selection,
-#episode_input {
+#episode_input,
+#show_input,
+#filtered_show_box {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -65,17 +69,35 @@
   font-size: 12px;
   border: 1px solid burlywood;
   border-radius: 7px;
+  width: 180px;
+  height: 30px;
+  box-sizing: border-box;
 }
 
 #display_quantity_dom,
 #display_quantityShows_dom {
-  margin-bottom: 10px;
+  margin-top: 12px;
   color: rgb(43, 6, 6);
+}
+
+.sideShowCard.show_card {
+  position: absolute;
+  right: 40px;
+  top: 20px;
+  width: 180px;
+  height: 170px;
+  padding: 10px;
+  font-size: 12px;
+  background-color: rgb(242, 240, 238);
+  border: 1px solid #40170b;
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px rgb(66, 37, 1);
+  display: inline-block;
 }
 
 .design_line {
   background-color: rgb(43, 6, 6);
-  height: 2px;
+  height: 50px;
 }
 
 .episode_card {
@@ -89,24 +111,36 @@
   color: rgb(43, 6, 6);
 }
 
-#img_front {
-  height: 210px;
-  width: auto;
+#img_front.show_card {
+  height: 130px;
+  width: 150px;
   border-radius: 10px;
   border-color: rgb(31, 9, 9) solid;
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
 }
 
-#mg_epi {
+#img_epi {
   border-radius: 10px;
   border-color: rgb(31, 9, 9) solid;
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
 }
 
-h2 {
+p {
+  text-align: left;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(101, 59, 5);
+  justify-content: baseline;
+  margin: 0;
+}
+
+h2.show_card {
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
   color: rgb(54, 32, 4);
-  font-weight: 1000px;
+  font-weight: 700;
   align-self: center;
+  margin: 0 0 10 0;
 }
 
 a {
@@ -114,15 +148,47 @@ a {
   color: inherit;
 }
 
+#title.show_card {
+  text-align: left;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(101, 59, 5);
+  flex-flow: column;
+  margin: 0;
+  position: absolute;
+  right: 40px;
+  top: 20px;
+  width: 180px;
+  height: 170px;
+  padding: 10px;
+  font-size: 12px;
+  display: inline-block;
+}
+
 #crossing {
   color: rgb(101, 59, 5);
   font-weight: 500px;
   text-decoration-line: underline;
+  position: absolute;
+  right: 50px;
+  margin-top: 12px;
 }
 
 h3 {
   color: rgb(101, 59, 5);
   font-weight: 500px;
+}
+
+#summary.show_card {
+  flex: 1;
+  right: 40px;
+  top: 20px;
+  width: 10px;
+  height: 170px;
+  padding: 10px;
+  font-size: 12px;
+  text-align: left;
+  display: inline-block;
 }
 
 .footer {
@@ -135,9 +201,9 @@ h3 {
   justify-items: center;
 }
 
-.linkDataSource {
-  justify-content: right;
+.linkfooter {
   font-family: Helvetica, sans-serif;
   font-size: 12px;
   color: rgb(43, 6, 6);
+  text-decoration-line: underline;
 }
