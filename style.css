@@ -3,21 +3,21 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 15px;
-  padding: 20px;
+  padding: 10px;
 }
 
 #front_page_root {
   background-color: burlywood;
   display: grid;
-  grid-template-rows: repeat(auto-fill, minmax(250px, auto));
-  padding: 10px 0 0 18px;
+  grid-template-rows: repeat(minmax(250px, auto));
+  padding: 30px 0 0 18px;
 }
 
 .show_card {
   width: 1070px;
   height: 200px;
   background-color: #f2f0ea;
-  border-color: rgb(31, 9, 9) solid;
+  border-color: rgb(31, 9, 9);
   border-radius: 10px;
   margin-bottom: 20px;
   padding: 15px;
@@ -26,16 +26,26 @@
   font-size: 12px;
   color: rgb(43, 6, 6);
   display: flex;
-  align-items: flex-start;
-  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   position: relative;
+}
+
+.show_card .content {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .header {
   height: 50px;
   width: 99%;
   background-color: rgb(243, 220, 175);
-  border-color: rgb(31, 9, 9) solid;
+  border-color: rgb(31, 9, 9);
   font-family: Helvetica, sans-serif;
   font-size: 12px;
   color: rgb(43, 6, 6);
@@ -52,7 +62,7 @@
   flex-direction: row;
   margin: 0 15px;
   height: 31px;
-  justify-content: flex-start;
+  align-items: center;
 }
 
 #episodes_selection,
@@ -65,12 +75,12 @@
   appearance: none;
   background: #f2f0ea;
   padding: 8px 12px;
-  margin: 0 15px 0 0;
-  font-size: 12px;
+  margin: 0 20px 0 0;
+  font-size: 20px;
   border: 1px solid burlywood;
   border-radius: 7px;
   width: 180px;
-  height: 30px;
+  height: 45px;
   box-sizing: border-box;
 }
 
@@ -78,21 +88,23 @@
 #display_quantityShows_dom {
   margin-top: 12px;
   color: rgb(43, 6, 6);
+  font-size: 20px;
 }
 
-.sideShowCard.show_card {
-  position: absolute;
+.sideShowCard {
   right: 40px;
   top: 20px;
   width: 180px;
-  height: 170px;
+  height: 150px;
   padding: 10px;
   font-size: 12px;
   background-color: rgb(242, 240, 238);
   border: 1px solid #40170b;
   border-radius: 8px;
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
+  line-height: 2.5;
   display: inline-block;
+  flex-shrink: 0;
 }
 
 .design_line {
@@ -102,7 +114,7 @@
 
 .episode_card {
   background-color: #f2f0ea;
-  border-color: rgb(31, 9, 9) solid;
+  border-color: rgb(31, 9, 9);
   border-radius: 10px;
   padding: 5px;
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
@@ -111,17 +123,18 @@
   color: rgb(43, 6, 6);
 }
 
-#img_front.show_card {
-  height: 130px;
-  width: 150px;
+#img_front {
+  width: 180px;
+  height: 170px;
   border-radius: 10px;
-  border-color: rgb(31, 9, 9) solid;
+  border-color: rgb(31, 9, 9);
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
+  flex-shrink: 0;
 }
 
 #img_epi {
   border-radius: 10px;
-  border-color: rgb(31, 9, 9) solid;
+  border-color: rgb(31, 9, 9);
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
 }
 
@@ -148,21 +161,11 @@ a {
   color: inherit;
 }
 
-#title.show_card {
-  text-align: left;
-  font-size: 12px;
-  font-family: Arial, Helvetica, sans-serif;
-  color: rgb(101, 59, 5);
-  flex-flow: column;
+#title {
   margin: 0;
-  position: absolute;
-  right: 40px;
-  top: 20px;
-  width: 180px;
-  height: 170px;
-  padding: 10px;
-  font-size: 12px;
-  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  flex: 1;
 }
 
 #crossing {
@@ -170,8 +173,9 @@ a {
   font-weight: 500px;
   text-decoration-line: underline;
   position: absolute;
-  right: 50px;
-  margin-top: 12px;
+  right: 20px;
+  margin-top: 15px;
+  font-size: 20px;
 }
 
 h3 {
@@ -179,22 +183,23 @@ h3 {
   font-weight: 500px;
 }
 
-#summary.show_card {
+.summary {
   flex: 1;
-  right: 40px;
-  top: 20px;
-  width: 10px;
-  height: 170px;
+  width: 500px;
+  height: 150px;
   padding: 10px;
-  font-size: 12px;
-  text-align: left;
-  display: inline-block;
+  font-size: 14px;
+  background-color: rgb(242, 240, 238);
+  border: 1px solid #40170b;
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px rgb(66, 37, 1);
+  line-height: 1.5;
 }
 
 .footer {
   height: 25px;
   background-color: rgb(243, 220, 175);
-  border-color: rgb(31, 9, 9) solid;
+  border-color: rgb(31, 9, 9);
   font-family: Helvetica, sans-serif;
   font-size: 12px;
   color: rgb(43, 6, 6);
@@ -206,4 +211,7 @@ h3 {
   font-size: 12px;
   color: rgb(43, 6, 6);
   text-decoration-line: underline;
+}
+label {
+  display: none;
 }

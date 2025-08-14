@@ -77,17 +77,25 @@ function createShowCard(show) {
   linkToEpisodes.href = `episodes_page.html?showId=${show.id}`;
   linkToEpisodes.textContent = show.name;
   showTitle.appendChild(linkToEpisodes);
+
+  const showCardContent = document.createElement("div");
+  showCardContent.classList.add("content");
+  showCard.appendChild(showCardContent);
   const imageShowCard = document.createElement("img");
   imageShowCard.id = "img_front";
   imageShowCard.src = show.image
     ? show.image.medium
     : "https://static.tvmaze.com/images/tvm-header-logo.png";
   imageShowCard.alt = show.name || "No title";
-  showCard.appendChild(imageShowCard);
+  showCardContent.appendChild(imageShowCard);
+  const containerForText = document.createElement("div");
+  containerForText.classList.add("summary");
+  showCardContent.appendChild(containerForText);
+
   createShowCardElement(
-    showCard,
-    "div",
-    "summary",
+    containerForText,
+    "p",
+    "summary_text",
     show.summary || "No summary available",
     true
   );
@@ -96,7 +104,7 @@ function createShowCard(show) {
   createShowCardElement(
     sideShowCard,
     "p",
-    "rate",
+    "rated",
     `Rated: ${show.rating.average}`
   );
   createShowCardElement(
@@ -112,7 +120,7 @@ function createShowCard(show) {
     "runtime",
     `Runtime: ${show.runtime}`
   );
-  showCard.appendChild(sideShowCard);
+  showCardContent.appendChild(sideShowCard);
 
   return showCard;
 }
@@ -143,8 +151,12 @@ navBar.appendChild(searchInputDom);
 const showsQuantityDom = document.getElementById("display_quantityShows_dom");
 navBar.appendChild(showsQuantityDom);
 
+const label = document.createElement("label");
+label.textContent = "Select a show";
+label.setAttribute("for", "filtered_show_box");
 const selectFilteredShowOptionDom = document.createElement("select");
 selectFilteredShowOptionDom.id = "filtered_show_box";
+navBar.appendChild(label);
 navBar.appendChild(selectFilteredShowOptionDom);
 const selectAllShowsOptionDom = document.createElement("option");
 selectAllShowsOptionDom.value = "All shows";

@@ -10,14 +10,22 @@
   </head>
 
   <body>
-    <!--
-  <div id="selectors">
-    
-    <select aria-label="episodes_selection" id="episodes_selection" name="episodes_selection"
-      placeholder="Select episode"></select>
-      
-  </div>
-  -->
+    <div id="selectors">
+      <label for="shows_selection">Select show:</label>
+      <select
+        aria-label="shows_selection"
+        id="shows_selection"
+        name="shows_selection"
+        placeholder="Select show"
+      ></select>
+      <label for="episodes_selection">Select episode:</label>
+      <select
+        aria-label="episodes_selection"
+        id="episodes_selection"
+        name="episodes_selection"
+        placeholder="Select episode"
+      ></select>
+    </div>
     <div>
       <label for="episode_input"></label>
       <input id="episode_input" type="search" placeholder="Type your text" />
