@@ -105,6 +105,8 @@ async function setup() {
       if (A < B) return -1;
       return 0;
     });
+
+    showSelectDom.innerHTML = "";
     for (const show of state.allShows) {
       addSelectEntry(show, "show");
     }
