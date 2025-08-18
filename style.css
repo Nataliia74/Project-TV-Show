@@ -15,7 +15,7 @@
 
 .show_card {
   width: 1070px;
-  height: 200px;
+  height: 300px;
   background-color: #f2f0ea;
   border-color: rgb(31, 9, 9);
   border-radius: 10px;
@@ -43,7 +43,7 @@
 
 .header {
   height: 50px;
-  width: 99%;
+  width: 100%;
   background-color: rgb(243, 220, 175);
   border-color: rgb(31, 9, 9);
   font-family: Helvetica, sans-serif;
@@ -53,17 +53,16 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  position: fixed;
   top: 0;
 }
 
-.selectors {
+/*.selectors {
   display: flex;
   flex-direction: row;
   margin: 0 15px;
   height: 31px;
   align-items: center;
-}
+}*/
 
 #episodes_selection,
 #shows_selection,
@@ -75,12 +74,12 @@
   appearance: none;
   background: #f2f0ea;
   padding: 8px 12px;
-  margin: 0 20px 0 0;
-  font-size: 20px;
+  margin: 15px 20px 10px 10px;
+  font-size: 12px;
   border: 1px solid burlywood;
   border-radius: 7px;
   width: 180px;
-  height: 45px;
+  height: 30px;
   box-sizing: border-box;
 }
 
@@ -88,28 +87,28 @@
 #display_quantityShows_dom {
   margin-top: 12px;
   color: rgb(43, 6, 6);
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .sideShowCard {
   right: 40px;
   top: 20px;
   width: 180px;
-  height: 150px;
+  height: 230px;
   padding: 10px;
   font-size: 12px;
   background-color: rgb(242, 240, 238);
   border: 1px solid #40170b;
   border-radius: 8px;
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
-  line-height: 2.5;
+  line-height: 3.5;
   display: inline-block;
   flex-shrink: 0;
 }
 
 .design_line {
   background-color: rgb(43, 6, 6);
-  height: 50px;
+  height: 15px;
 }
 
 .episode_card {
@@ -125,7 +124,7 @@
 
 #img_front {
   width: 180px;
-  height: 170px;
+  height: 250px;
   border-radius: 10px;
   border-color: rgb(31, 9, 9);
   box-shadow: 2px 2px 2px rgb(66, 37, 1);
@@ -175,7 +174,7 @@ a {
   position: absolute;
   right: 20px;
   margin-top: 15px;
-  font-size: 20px;
+  font-size: 14px;
 }
 
 h3 {
@@ -186,7 +185,7 @@ h3 {
 .summary {
   flex: 1;
   width: 500px;
-  height: 150px;
+  height: 230px;
   padding: 10px;
   font-size: 14px;
   background-color: rgb(242, 240, 238);
